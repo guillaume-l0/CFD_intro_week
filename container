@@ -1,0 +1,36 @@
+%% clear up variables
+
+clear all;
+
+%% define parameters
+
+h0 = 2;
+g = 9.81;
+S = 1.0;
+rho = 1000;
+Cl = 1000;
+
+alpha = -sqrt(g/(S^2*Cl*rho));
+Ci_prime = sqrt(h0);
+t_e = -2*sqrt(h0)/alpha;
+
+t_past = linspace(-0.2*t_e,0);
+t0 = 0;
+t1 = t_e;
+
+
+
+t = linspace(t0,t1,1001);
+
+h = alpha^2*t.^2/4 + Ci_prime*alpha*t + h0;
+h_ave = (alpha^2*t_e^3/12 + alpha*sqrt(h0)*t_e^2/2 + h0*t_e)/(t_e-t0);
+disp({'The average water level is :',mean(h)})
+disp({'The average water level is fgr :',mean(h_ave)})
+
+plot(t,h,'-k','lineWidth',2)
+hold on 
+plot(t_past,t_past * 0 + h0,'-r','lineWidth',2)
+xlim([-0.2*t_e,t_e])
+ylim([0,1.05*h0])
+xlabel('t [s]')
+ylabel('h [m]')
